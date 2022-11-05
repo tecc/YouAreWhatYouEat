@@ -1,16 +1,15 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace Game.Util
 {
-    public class LevelManager : UnityEngine.MonoBehaviour
+    public class LevelManager : MonoBehaviour
     {
-        [SerializeField]
-        List<string> levels = new List<string>();
-        
+        [SerializeField] List<string> levels = new();
+
 
         public void LoadLevel(int levelNum)
         {
@@ -18,19 +17,15 @@ namespace Game.Util
             SceneManager.LoadScene(levels[levelNum]);
         }
 
-        public bool LoadLevel(string name)
+        public bool LoadLevel(string levelName)
         {
-            foreach (var level in levels)
+            foreach (var level in levels.Where(level => level.Equals(levelName)))
             {
-                if (level.Equals(name))
-                {
-                    SceneManager.LoadScene(level);
-                    return true;
-                }
+                SceneManager.LoadScene(level);
+                return true;
             }
 
             return false;
         }
-        
     }
 }
